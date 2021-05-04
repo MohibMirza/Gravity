@@ -36,7 +36,7 @@ public class Parse {
 
             }
 
-            Map map = new Map(spawnCoord, facing, portals);
+            Map map = new Map(key, spawnCoord, facing, portals);
 
             Main.maps.add(map);
         }

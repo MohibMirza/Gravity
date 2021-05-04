@@ -6,11 +6,13 @@ public class Map {
     public Coordinate spawn;
     public String facing;
     public List<Portal> portals;
+    public String name;
 
-    public Map(Coordinate spawn, String facing, List<Portal> portals) {
+    public Map(String name, Coordinate spawn, String facing, List<Portal> portals) {
         this.spawn = spawn;
         this.facing = facing;
         this.portals = portals;
+        this.name = name;
     }
 
     public String toString() {
