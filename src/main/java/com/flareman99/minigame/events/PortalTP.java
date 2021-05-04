@@ -58,7 +58,6 @@ public class PortalTP implements Listener {
             Coordinate dest = portal.getDest();
 
             player.teleport(new Location(player.getWorld(), dest.locX, dest.locY, dest.locZ));
-
         }
 
     }
