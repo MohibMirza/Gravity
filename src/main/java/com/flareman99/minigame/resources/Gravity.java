@@ -17,6 +17,8 @@ public class Gravity {
     int numberOfMaps;
     public static List<Portal> activePortals;
 
+    public static java.util.Map<String, GravityPlayer> players;
+
     GameState state;
 
     public Gravity(List<Map> maps, int numberOfMaps) {
@@ -61,6 +63,7 @@ public class Gravity {
         activePortals.clear();
         activeMaps.clear();
         start();
+        players.clear();
     }
 
 
