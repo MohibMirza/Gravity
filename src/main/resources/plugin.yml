@@ -1,0 +1,4 @@
+name: Gravity
+version: ${project.version}
+main: com.flareman99.minigame.Main
+api-version: 1.16
