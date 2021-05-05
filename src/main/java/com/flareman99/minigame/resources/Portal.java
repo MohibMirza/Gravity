@@ -1,9 +1,13 @@
 package com.flareman99.minigame.resources;
 
+import com.flareman99.minigame.Main;
+import org.bukkit.Location;
+
 public class Portal {
     Coordinate pos1, pos2;
     Coordinate dest;
     boolean isFinish = false;
+    Map destMap;
 
     public Portal(Coordinate pos1, Coordinate pos2) {
         this.pos1 = pos1;
@@ -27,12 +31,23 @@ public class Portal {
         return pos2;
     }
 
+    public Map getMap() { return destMap; }
+
     public void setDest(Coordinate dest) {
         this.dest = dest;
     }
 
     public void setFinish(boolean isFinish) {
         this.isFinish = isFinish;
+    }
+
+    public void setMap(Map map) { this.destMap = map; }
+
+    public Location getDeathPoint() {
+
+        if(destMap == null) return Main.gravity.lobby;
+
+        return Util.coordToLocation(destMap.spawn);
     }
 
 

@@ -18,15 +18,17 @@ public class JoinLeave implements Listener {
     public void playerJoin(PlayerJoinEvent event){
         Player player = event.getPlayer();
         String name = event.getPlayer().getName();
-        GravityPlayer gplayer = new GravityPlayer(name);
+        GravityPlayer gplayer = new GravityPlayer(player);
         Gravity.players.put(name, gplayer);
-        player.teleport(Main.gravity.location);
+        player.teleport(Main.gravity.lobby);
+        System.out.println(Main.gravity.lobby == null);
 
         int playerCount = Bukkit.getOnlinePlayers().size()-1;
 
         if(playerCount == 0) {
             // START QUEUE TIMER
             BukkitTask timer = new Timer(Main.getPlugin()).runTaskTimer(Main.getPlugin(), 0, 20L);
+
         }
     }
 

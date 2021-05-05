@@ -2,6 +2,7 @@ package com.flareman99.minigame.events;
 
 import com.flareman99.minigame.Main;
 import com.flareman99.minigame.resources.Coordinate;
+import com.flareman99.minigame.resources.Gravity;
 import com.flareman99.minigame.resources.Portal;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -58,6 +59,7 @@ public class PortalTP implements Listener {
             Coordinate dest = portal.getDest();
 
             player.teleport(new Location(player.getWorld(), dest.locX, dest.locY, dest.locZ));
+            // Gravity.players.get(player.getName())
         }
 
     }

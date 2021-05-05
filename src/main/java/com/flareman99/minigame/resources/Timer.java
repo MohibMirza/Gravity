@@ -25,7 +25,13 @@ public class Timer extends BukkitRunnable {
             this.cancel();
             Coordinate firstMap = Main.gravity.activeMaps.get(0).spawn;
             Location loc = new Location(Bukkit.getWorld("world"), firstMap.locX, firstMap.locY, firstMap.locZ);
-            Bukkit.getOnlinePlayers().forEach(player -> { player.teleport(loc); });
+            Bukkit.getOnlinePlayers().forEach(player -> {
+                player.teleport(loc);
+
+                GravityPlayer gPlayer = Gravity.players.get(player.getName());
+                gPlayer.setCurrentMap(Main.gravity.activeMaps.get(0));
+                gPlayer.setInLobby(false);
+            });
         }
     }
 }

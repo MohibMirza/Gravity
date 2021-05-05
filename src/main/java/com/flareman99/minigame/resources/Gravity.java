@@ -28,11 +28,9 @@ public class Gravity {
 
 
 
-    Location lobby;
+    public Location lobby;
 
     public GameState state;
-
-    public Location location;
 
     public Gravity(List<Map> maps, int numberOfMaps) {
         this.maps = maps;
@@ -45,7 +43,7 @@ public class Gravity {
         state = GameState.WAITING;
         players = new HashMap<String, GravityPlayer>();
         Coordinate c = Parse.convertToCoord(Main.getPlugin().getConfig().getString("lobby.location"));
-        location = new Location(Bukkit.getServer().getWorld("world"), c.locX, c.locY, c.locZ);
+        lobby = new Location(Bukkit.getServer().getWorld("world"), c.locX, c.locY, c.locZ);
     }
 
     public void start() {
@@ -72,11 +70,11 @@ public class Gravity {
         }
 
         Map finalMap = maps.get(chosenMaps.get(chosenMaps.size()-1));
+        System.out.println(finalMap.toString());
         activeMaps.add(finalMap);
 
-        Location lobby = Main.gravity.lobby;
         for(Portal portal : finalMap.portals){
-            portal.dest = new Coordinate(lobby.getBlockX(), lobby.getBlockY(), lobby.getBlockZ());
+            portal.setDest(new Coordinate(lobby.getBlockX(), lobby.getBlockY(), lobby.getBlockZ()));
             activePortals.add(portal);
 
         }
