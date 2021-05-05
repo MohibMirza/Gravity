@@ -6,6 +6,7 @@ import com.flareman99.minigame.events.JoinLeave;
 import com.flareman99.minigame.events.PortalTP;
 import com.flareman99.minigame.resources.*;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +42,8 @@ public final class Main extends JavaPlugin {
 
         getCommand("maps").setExecutor(new MapSearch());
         getCommand("activemaps").setExecutor(new ActiveMaps());
+
+        // BukkitTask timer = new Timer(this).runTaskTimer(this, 0, 20L);
 
 
     }

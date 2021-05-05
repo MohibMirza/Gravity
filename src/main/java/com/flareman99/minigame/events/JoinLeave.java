@@ -24,6 +24,5 @@ public class JoinLeave implements Listener {
     public void playerLeave(PlayerQuitEvent event) {
         Gravity.players.remove(event.getPlayer().getName());
 
-
     }
 }
