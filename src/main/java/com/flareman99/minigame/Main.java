@@ -29,8 +29,6 @@ public final class Main extends JavaPlugin {
         saveDefaultConfig();
 
         Parse.parseConfig();
-        System.out.println(maps.toString());
-
         System.out.println();
 
 

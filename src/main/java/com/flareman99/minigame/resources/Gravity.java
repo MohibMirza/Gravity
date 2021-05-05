@@ -4,6 +4,7 @@ import com.flareman99.minigame.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
+import javax.print.attribute.standard.Destination;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,17 +17,20 @@ public class Gravity {
         STARTED
     }
 
+    public static List<Portal> activePortals;
+    public static java.util.Map<String, GravityPlayer> players;
+
+
     Random random;
     List<Map> maps;
     public List<Map> activeMaps;
     int numberOfMaps;
-    public static List<Portal> activePortals;
 
-    public static java.util.Map<String, GravityPlayer> players;
+
 
     Location lobby;
 
-    GameState state;
+    public GameState state;
 
     public Location location;
 
@@ -52,7 +56,7 @@ public class Gravity {
                 choose = random.nextInt(maps.size());
             }
             chosenMaps.add(choose);
-            System.out.println(choose);
+            System.out.println("CHOOSE:" + choose);
         }
 
         for(int i = 0; i < chosenMaps.size()-1; i++){
@@ -64,18 +68,26 @@ public class Gravity {
             for(Portal portal : maps.get(mapNo).portals) {
                 portal.setDest(maps.get(mapNo2).spawn);
                 activePortals.add(portal);
-                System.out.println(portal.getDest().toString());
             }
         }
-        activeMaps.add(maps.get(chosenMaps.size()-1));
+
+        Map finalMap = maps.get(chosenMaps.get(chosenMaps.size()-1));
+        activeMaps.add(finalMap);
+
+        Location lobby = Main.gravity.lobby;
+        for(Portal portal : finalMap.portals){
+            portal.dest = new Coordinate(lobby.getBlockX(), lobby.getBlockY(), lobby.getBlockZ());
+            activePortals.add(portal);
+
+        }
 
     }
 
     public void reset() {
         activePortals.clear();
         activeMaps.clear();
+        // players.clear(); KICK PLAYERS AND THIS WILL ALREADY BE CLEARED!
         start();
-        players.clear();
     }
 
 
