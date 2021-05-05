@@ -2,6 +2,7 @@ package com.flareman99.minigame;
 
 import com.flareman99.minigame.cmds.ActiveMaps;
 import com.flareman99.minigame.cmds.MapSearch;
+import com.flareman99.minigame.events.JoinLeave;
 import com.flareman99.minigame.events.PortalTP;
 import com.flareman99.minigame.resources.*;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -14,7 +15,6 @@ public final class Main extends JavaPlugin {
     private static Main plugin;
 
     public static List<Map> maps;
-
     public static Gravity gravity;
 
     @Override
@@ -30,14 +30,18 @@ public final class Main extends JavaPlugin {
         Parse.parseConfig();
         System.out.println(maps.toString());
 
+        System.out.println();
+
 
         gravity = new Gravity(maps, 5);
         gravity.start();
 
         getServer().getPluginManager().registerEvents(new PortalTP(), this);
+        getServer().getPluginManager().registerEvents(new JoinLeave(), this);
 
         getCommand("maps").setExecutor(new MapSearch());
         getCommand("activemaps").setExecutor(new ActiveMaps());
+
 
     }
 

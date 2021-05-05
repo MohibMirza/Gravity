@@ -1,6 +1,11 @@
 package com.flareman99.minigame.resources;
 
+import com.flareman99.minigame.Main;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -19,7 +24,11 @@ public class Gravity {
 
     public static java.util.Map<String, GravityPlayer> players;
 
+    Location lobby;
+
     GameState state;
+
+    public Location location;
 
     public Gravity(List<Map> maps, int numberOfMaps) {
         this.maps = maps;
@@ -30,6 +39,9 @@ public class Gravity {
         activePortals = new ArrayList<Portal>();
         activeMaps = new ArrayList<Map>();
         state = GameState.WAITING;
+        players = new HashMap<String, GravityPlayer>();
+        Coordinate c = Parse.convertToCoord(Main.getPlugin().getConfig().getString("lobby.location"));
+        location = new Location(Bukkit.getServer().getWorld("world"), c.locX, c.locY, c.locZ);
     }
 
     public void start() {

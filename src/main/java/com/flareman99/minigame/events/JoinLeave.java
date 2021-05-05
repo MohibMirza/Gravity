@@ -13,16 +13,16 @@ public class JoinLeave implements Listener {
 
     @EventHandler
     public void playerJoin(PlayerJoinEvent event){
+        Player player = event.getPlayer();
         String name = event.getPlayer().getName();
-        GravityPlayer player = new GravityPlayer(name);
-        Gravity.players.put(name, player);
-
-
+        GravityPlayer gplayer = new GravityPlayer(name);
+        Gravity.players.put(name, gplayer);
+        player.teleport(Main.gravity.location);
     }
 
     @EventHandler
     public void playerLeave(PlayerQuitEvent event) {
-
+        Gravity.players.remove(event.getPlayer().getName());
 
 
     }

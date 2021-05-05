@@ -1,3 +1,7 @@
+lobby:
+  location: "1067.5 177 350.5"
+  facing: "EAST"
+  time: 2.0
 maps:
   2-1:
     spawn: "0.5 246 -0.5"
