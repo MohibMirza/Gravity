@@ -31,15 +31,14 @@ public class GravityPlayer {
         this.inLobby = inLobby;
     }
 
-    public void setSpawnPoint() {
-        if(inLobby) {
+    public Location getSpawnPoint() {
+        if(currentMap == null) {
             Location loc = Main.gravity.lobby;
-            player.setBedSpawnLocation( Main.gravity.lobby );
+            return Main.gravity.lobby;
         }else{
-            player.setBedSpawnLocation(Util.coordToLocation(currentMap.spawn));
+            return Util.coordToLocation(currentMap.spawn);
         }
     }
-
 
 
 }

@@ -65,6 +65,7 @@ public class Gravity {
 
             for(Portal portal : maps.get(mapNo).portals) {
                 portal.setDest(maps.get(mapNo2).spawn);
+                portal.setDestMap(maps.get(mapNo2));
                 activePortals.add(portal);
             }
         }
@@ -75,8 +76,9 @@ public class Gravity {
 
         for(Portal portal : finalMap.portals){
             portal.setDest(new Coordinate(lobby.getBlockX(), lobby.getBlockY(), lobby.getBlockZ()));
+            portal.setDestMap(null);
             activePortals.add(portal);
-
+            portal.setFinish(true);
         }
 
     }

@@ -10,7 +10,7 @@ public class Timer extends BukkitRunnable {
 
     Main plugin;
 
-    public static int timer = 5;
+    public int timer = 5;
 
     public Timer(Main plugin) {
         this.plugin = plugin;
@@ -23,6 +23,7 @@ public class Timer extends BukkitRunnable {
 
         if(timer == 0 || Main.gravity.state == Gravity.GameState.STARTED) {
             this.cancel();
+            Main.gravity.reset();
             Coordinate firstMap = Main.gravity.activeMaps.get(0).spawn;
             Location loc = new Location(Bukkit.getWorld("world"), firstMap.locX, firstMap.locY, firstMap.locZ);
             Bukkit.getOnlinePlayers().forEach(player -> {

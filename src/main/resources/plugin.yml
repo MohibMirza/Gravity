@@ -9,3 +9,5 @@ commands:
     activemaps:
       description: list all active maps for Gravity
       aliases: []
+    debug:
+      description: asfkla

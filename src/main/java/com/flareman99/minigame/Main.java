@@ -1,9 +1,11 @@
 package com.flareman99.minigame;
 
 import com.flareman99.minigame.cmds.ActiveMaps;
+import com.flareman99.minigame.cmds.Debug;
 import com.flareman99.minigame.cmds.MapSearch;
 import com.flareman99.minigame.events.JoinLeave;
 import com.flareman99.minigame.events.PortalTP;
+import com.flareman99.minigame.events.Respawn;
 import com.flareman99.minigame.resources.*;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
@@ -37,9 +39,11 @@ public final class Main extends JavaPlugin {
 
         getServer().getPluginManager().registerEvents(new PortalTP(), this);
         getServer().getPluginManager().registerEvents(new JoinLeave(), this);
+        getServer().getPluginManager().registerEvents(new Respawn(), this);
 
         getCommand("maps").setExecutor(new MapSearch());
         getCommand("activemaps").setExecutor(new ActiveMaps());
+        getCommand("debug").setExecutor(new Debug());
 
         // BukkitTask timer = new Timer(this).runTaskTimer(this, 0, 20L);
 

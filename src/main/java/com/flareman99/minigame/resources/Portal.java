@@ -33,6 +33,8 @@ public class Portal {
 
     public Map getMap() { return destMap; }
 
+    public Map getDestMap() { return destMap; };
+
     public void setDest(Coordinate dest) {
         this.dest = dest;
     }
@@ -41,7 +43,7 @@ public class Portal {
         this.isFinish = isFinish;
     }
 
-    public void setMap(Map map) { this.destMap = map; }
+    public void setDestMap(Map map) { this.destMap = map; }
 
     public Location getDeathPoint() {
 
