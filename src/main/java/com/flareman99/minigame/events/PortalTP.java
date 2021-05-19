@@ -59,6 +59,7 @@ public class PortalTP implements Listener {
             Coordinate dest = portal.getDest();
 
             player.teleport(new Location(player.getWorld(), dest.locX, dest.locY, dest.locZ));
+            player.setHealth(20);
             Gravity.players.get(player.getName()).setCurrentMap(portal.getDestMap());
 
             if(portal.getFinish()) {

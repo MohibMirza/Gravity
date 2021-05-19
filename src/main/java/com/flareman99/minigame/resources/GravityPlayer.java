@@ -12,6 +12,9 @@ public class GravityPlayer {
 
     public GravityPlayer(Player player) {
         this.player = player;
+        Gravity.players.put(player.getName(), this);
+        player.teleport(Main.gravity.lobby);
+
 
     }
 

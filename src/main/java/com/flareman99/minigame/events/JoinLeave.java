@@ -3,9 +3,8 @@ package com.flareman99.minigame.events;
 import com.flareman99.minigame.Main;
 import com.flareman99.minigame.resources.Gravity;
 import com.flareman99.minigame.resources.GravityPlayer;
-import com.flareman99.minigame.resources.Timer;
+import com.flareman99.minigame.resources.LobbyTimer;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -16,18 +15,12 @@ public class JoinLeave implements Listener {
 
     @EventHandler
     public void playerJoin(PlayerJoinEvent event){
-        Player player = event.getPlayer();
-        String name = event.getPlayer().getName();
-        GravityPlayer gplayer = new GravityPlayer(player);
-        Gravity.players.put(name, gplayer);
-        player.teleport(Main.gravity.lobby);
-        System.out.println(Main.gravity.lobby == null);
-
+        new GravityPlayer(event.getPlayer());
         int playerCount = Bukkit.getOnlinePlayers().size()-1;
 
         if(playerCount == 0) {
             // START QUEUE TIMER
-            BukkitTask timer = new Timer(Main.getPlugin()).runTaskTimer(Main.getPlugin(), 0, 20L);
+            // BukkitTask timer = new LobbyTimer(Main.getPlugin(), Main.gravity).runTaskTimer(Main.getPlugin(), 0, 20L);
 
         }
     }
