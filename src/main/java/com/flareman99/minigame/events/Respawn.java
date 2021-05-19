@@ -16,6 +16,7 @@ public class Respawn implements Listener {
     @EventHandler
     public void onDeath(PlayerRespawnEvent event) {
         Player player = event.getPlayer();
+        player.setBedSpawnLocation(new Location(Bukkit.getWorld("world"), 0, 0, 0));
         event.setRespawnLocation(Gravity.players.get(player.getName()).getSpawnPoint());
 
     }

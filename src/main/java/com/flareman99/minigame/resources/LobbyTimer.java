@@ -8,13 +8,14 @@ import org.bukkit.scheduler.BukkitTask;
 
 public class LobbyTimer extends BukkitRunnable {
 
-    // TODO: MAKE WINNER LIST WORK IN GRAVITY.JAVA + IF SOMEONE LEAVES THEY ARE REMOVED FROM THE WINNER LIST
+    // TODO: MAKE WINNER LIST WORK IN GRAVITY.JAVA + IF SOMEONE LEAVES THEY ARE REMOVED FROM THE WINNER LIST BEFORE GAME LOOP SCANS FOR IT
 
     enum GameState {
         IDLE,
         WAITING,
         READY,
         STARTED,
+        END,
         CANCELLED
     }
 
@@ -32,8 +33,9 @@ public class LobbyTimer extends BukkitRunnable {
 
     @Override
     public void run() {
+        int playerCount = Bukkit.getOnlinePlayers().size();
         if(state == GameState.IDLE) {
-            if(Bukkit.getOnlinePlayers().size() > 0) {
+            if(playerCount > 0) {
                 state = GameState.WAITING;
                 timer = Main.MAX_LOBBY_WAIT_TIME;
             }
@@ -44,8 +46,7 @@ public class LobbyTimer extends BukkitRunnable {
 
             // UPDATE PLAYERS HUDS HERE
 
-            int playerCount = Bukkit.getOnlinePlayers().size();
-            if(timer == 0 || playerCount == Main.MAX_PLAYERS) {
+           if(timer == 0 || playerCount == Main.MAX_PLAYERS) {
                 state = GameState.READY;
                 timer = Main.MAX_GAME_TIME;
             }
@@ -60,9 +61,21 @@ public class LobbyTimer extends BukkitRunnable {
 
             // UPDATE PLAYER HUDS HERE
 
-            if(timer == 0 || )
+            if(timer == 0 || gravity.winners.size() == playerCount) {
+                state = GameState.END;
+            }
+
+            if(playerCount == 0){
+                state = GameState.CANCELLED;
+            }
 
 
+        }
+
+        if(state == GameState.CANCELLED) {
+            state = GameState.IDLE;
+
+            // do cancellation stuff here
         }
 
 
