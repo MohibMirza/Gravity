@@ -15,6 +15,7 @@ public class GameLoop extends BukkitRunnable {
     enum GameState {
         IDLE,
         WAITING,
+        READY,
         STARTED,
         END,
         CANCELLED
@@ -43,7 +44,7 @@ public class GameLoop extends BukkitRunnable {
 
                 // DO SQL GAME SELECTOR FUNCS TO ALLOW PLAYERS TO JOIN IN
             }
-        }
+        }else
 
         if(state == GameState.WAITING) {
             System.out.println("WAITING STATE" + timer);
@@ -52,8 +53,8 @@ public class GameLoop extends BukkitRunnable {
             // UPDATE PLAYERS HUDS HERE
 
            if(timer == 0 || playerCount == Main.MAX_PLAYERS) {
-                state = GameState.STARTED;
-                timer = Main.MAX_GAME_TIME;
+                state = GameState.READY;
+
 
                 // REMOVE ROOM FROM SQL GAME SELECTOR LIST
             }
@@ -61,6 +62,13 @@ public class GameLoop extends BukkitRunnable {
             if(playerCount == 0) {
                 state = GameState.CANCELLED;
             }
+        }else
+
+        if(state == GameState.READY) {
+            // DO THE COUNTDOWN HERE
+
+            state = GameState.STARTED;
+            timer = Main.MAX_GAME_TIME;
         }
 
         if(state == GameState.STARTED) {
@@ -77,8 +85,7 @@ public class GameLoop extends BukkitRunnable {
                 state = GameState.CANCELLED;
             }
 
-
-        }
+        }else
 
         if(state == GameState.END) {
             System.out.println("END STATE");
@@ -90,7 +97,7 @@ public class GameLoop extends BukkitRunnable {
 
             Bukkit.getOnlinePlayers().forEach(player -> player.kickPlayer(""));
             state = GameState.IDLE;
-        }
+        }else
 
         if(state == GameState.CANCELLED) {
             System.out.println("CANCELLED STATE");
@@ -104,11 +111,7 @@ public class GameLoop extends BukkitRunnable {
 
 
 
-
-
-
     }
-
 /*    @Override
     public void run() {
         System.out.println(timer);

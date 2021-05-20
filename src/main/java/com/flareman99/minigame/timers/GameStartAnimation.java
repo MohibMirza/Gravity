@@ -2,6 +2,11 @@ package com.flareman99.minigame.timers;
 
 import com.flareman99.minigame.Main;
 import dev.lone.itemsadder.api.ItemsAdder;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
+import org.bukkit.Instrument;
+import org.bukkit.Note;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -13,21 +18,45 @@ public class GameStartAnimation extends BukkitRunnable {
 
     private int j = 5;
     private Set<Player> players;
-    private final long DELAY = 20L;
+    private final long PERIOD = 40L;
+    private float pitch = 0.6F;
+    private float pitchDropoff = 0.005F;
+    private final String[] COUNTDOWN = {"渭", "沺", "淄", "洳", "潍", "汝", "涔", "漼", "溦", "簿", "箔",
+        "槃", "条", "夂", "反"};
+    private final String[] WAITING_ON = {"湍", "汹", "漴", "鎏", "汕", "澧", "漕", "滋", "溯", "湴", "汫",
+        "洴", "灌", "溠", "洋", "溚"};
 
     public GameStartAnimation(Main plugin, Set<Player> players) {
         this.plugin = plugin;
         this.players = players;
 
-        for(j = 0; j <= 5; j++) {
-            this.runTaskLater(plugin, (long) (j * DELAY));
-        }
+        this.runTaskTimer(Main.getPlugin(), 0, PERIOD);
     }
     @Override
     public void run() {
-        players.forEach(player -> ItemsAdder.playTotemAnimation(
-                player, "animecraft:tenshi"));
+        players.forEach(player -> {
+            ItemsAdder.playTotemAnimation(
+                    player, "animecraft:countdown_" + j);
+
+            if (j != 0) player.playNote(player.getLocation(), Instrument.CHIME, Note.natural(1, Note.Tone.B));
+        });
+
 
         j--;
+        pitch += pitchDropoff;
+
+        if(j < 0){
+            players.forEach(player-> {
+                player.teleport(Main.gravity.lobby);
+                player.playSound(player.getLocation(), Sound.ENTITY_WANDERING_TRADER_DISAPPEARED,
+                        0.7F, pitch);
+                player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText("湍"));
+
+            });
+
+            this.cancel();
+        }
     }
+
+
 }

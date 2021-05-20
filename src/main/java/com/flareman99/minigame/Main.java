@@ -22,7 +22,7 @@ public final class Main extends JavaPlugin {
     public static Gravity gravity;
 
     public static final int MAX_PLAYERS = 8;
-    public static final int MAX_LOBBY_WAIT_TIME = 10;
+    public static final int MAX_LOBBY_WAIT_TIME = 30;
     public static final int MAX_GAME_TIME = 360;
 
     @Override
