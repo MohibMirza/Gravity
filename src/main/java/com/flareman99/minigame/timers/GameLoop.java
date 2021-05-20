@@ -1,19 +1,20 @@
-package com.flareman99.minigame.resources;
+package com.flareman99.minigame.timers;
 
 import com.flareman99.minigame.Main;
+import com.flareman99.minigame.resources.Gravity;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
-public class LobbyTimer extends BukkitRunnable {
+public class GameLoop extends BukkitRunnable {
 
     // TODO: MAKE WINNER LIST WORK IN GRAVITY.JAVA + IF SOMEONE LEAVES THEY ARE REMOVED FROM THE WINNER LIST BEFORE GAME LOOP SCANS FOR IT
+    // TODO: DO ALL COMMENTED ITEMS IN THIS FILE
 
     enum GameState {
         IDLE,
         WAITING,
-        READY,
         STARTED,
         END,
         CANCELLED
@@ -24,7 +25,7 @@ public class LobbyTimer extends BukkitRunnable {
     Gravity gravity;
     private GameState state;
 
-    public LobbyTimer(Main plugin, Gravity gravity) {
+    public GameLoop(Main plugin, Gravity gravity) {
         this.plugin = plugin;
         this.gravity = gravity;
         state = GameState.IDLE;
@@ -35,20 +36,26 @@ public class LobbyTimer extends BukkitRunnable {
     public void run() {
         int playerCount = Bukkit.getOnlinePlayers().size();
         if(state == GameState.IDLE) {
+            System.out.println("IDLE STATE");
             if(playerCount > 0) {
                 state = GameState.WAITING;
                 timer = Main.MAX_LOBBY_WAIT_TIME;
+
+                // DO SQL GAME SELECTOR FUNCS TO ALLOW PLAYERS TO JOIN IN
             }
         }
 
         if(state == GameState.WAITING) {
+            System.out.println("WAITING STATE" + timer);
             timer--;
 
             // UPDATE PLAYERS HUDS HERE
 
            if(timer == 0 || playerCount == Main.MAX_PLAYERS) {
-                state = GameState.READY;
+                state = GameState.STARTED;
                 timer = Main.MAX_GAME_TIME;
+
+                // REMOVE ROOM FROM SQL GAME SELECTOR LIST
             }
 
             if(playerCount == 0) {
@@ -56,7 +63,8 @@ public class LobbyTimer extends BukkitRunnable {
             }
         }
 
-        if(state == GameState.READY) {
+        if(state == GameState.STARTED) {
+            System.out.println("STARTED STATE " + timer);
             timer--;
 
             // UPDATE PLAYER HUDS HERE
@@ -72,7 +80,21 @@ public class LobbyTimer extends BukkitRunnable {
 
         }
 
+        if(state == GameState.END) {
+            System.out.println("END STATE");
+
+            // SQL SAVE PRIZES
+            // PLAY SOME PARTICLE ANIMATION FOR PLAYER
+
+            // RELOOP AND PLAY THE NEXT GAME ONCE DONE!
+
+            Bukkit.getOnlinePlayers().forEach(player -> player.kickPlayer(""));
+            state = GameState.IDLE;
+        }
+
         if(state == GameState.CANCELLED) {
+            System.out.println("CANCELLED STATE");
+
             state = GameState.IDLE;
 
             // do cancellation stuff here

@@ -7,7 +7,9 @@ import com.flareman99.minigame.events.JoinLeave;
 import com.flareman99.minigame.events.PortalTP;
 import com.flareman99.minigame.events.Respawn;
 import com.flareman99.minigame.resources.*;
+import com.flareman99.minigame.timers.GameLoop;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +22,7 @@ public final class Main extends JavaPlugin {
     public static Gravity gravity;
 
     public static final int MAX_PLAYERS = 8;
-    public static final int MAX_LOBBY_WAIT_TIME = 200;
+    public static final int MAX_LOBBY_WAIT_TIME = 10;
     public static final int MAX_GAME_TIME = 360;
 
     @Override
@@ -48,7 +50,7 @@ public final class Main extends JavaPlugin {
         getCommand("activemaps").setExecutor(new ActiveMaps());
         getCommand("debug").setExecutor(new Debug());
 
-        // BukkitTask timer = new Timer(this).runTaskTimer(this, 0, 20L);
+        BukkitTask timer = new GameLoop(this, gravity).runTaskTimer(this, 0, 20L);
 
 
     }
