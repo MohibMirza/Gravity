@@ -21,10 +21,6 @@ public final class Main extends JavaPlugin {
     public static List<Map> maps;
     public static Gravity gravity;
 
-    public static final int MAX_PLAYERS = 8;
-    public static final int MAX_LOBBY_WAIT_TIME = 30;
-    public static final int MAX_GAME_TIME = 360;
-
     @Override
     public void onEnable() {
         // Plugin startup logic
@@ -51,7 +47,6 @@ public final class Main extends JavaPlugin {
         getCommand("debug").setExecutor(new Debug());
 
         BukkitTask timer = new GameLoop(this, gravity).runTaskTimer(this, 0, 20L);
-
 
     }
 

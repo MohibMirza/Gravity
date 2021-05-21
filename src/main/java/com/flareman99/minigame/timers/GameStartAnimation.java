@@ -14,11 +14,12 @@ import java.util.Set;
 
 public class GameStartAnimation extends BukkitRunnable {
 
-    Main plugin;
+    private Main plugin;
+    private GameLoop gameLoop;
 
-    private int j = 5;
+    private int j = 15;
     private Set<Player> players;
-    private final long PERIOD = 40L;
+    private final long PERIOD = 20L;
     private float pitch = 0.6F;
     private float pitchDropoff = 0.005F;
     private final String[] COUNTDOWN = {"渭", "沺", "淄", "洳", "潍", "汝", "涔", "漼", "溦", "簿", "箔",
@@ -34,11 +35,23 @@ public class GameStartAnimation extends BukkitRunnable {
     }
     @Override
     public void run() {
-        players.forEach(player -> {
-            ItemsAdder.playTotemAnimation(
-                    player, "animecraft:countdown_" + j);
 
-            if (j != 0) player.playNote(player.getLocation(), Instrument.CHIME, Note.natural(1, Note.Tone.B));
+
+
+        players.forEach(player -> {
+
+            if(j <= 5) {
+                ItemsAdder.playTotemAnimation(
+                        player, "animecraft:countdown_" + j);
+
+                if (j != 0) {
+                    player.playNote(player.getLocation(), Instrument.CHIME,
+                            Note.natural(1, Note.Tone.B));
+
+                }
+            }
+            if(j != 0) player.spigot().sendMessage(ChatMessageType.ACTION_BAR,
+                    TextComponent.fromLegacyText(COUNTDOWN[j-1]));
         });
 
 

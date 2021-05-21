@@ -10,6 +10,8 @@ public class GravityPlayer {
     private boolean inLobby = true;
     Player player;
 
+    private int earnings;
+
     public GravityPlayer(Player player) {
         this.player = player;
         Gravity.players.put(player.getName(), this);
@@ -41,6 +43,10 @@ public class GravityPlayer {
         }else{
             return Util.coordToLocation(currentMap.spawn);
         }
+    }
+
+    public void addEarnings(int gems) {
+        earnings += gems;
     }
 
 

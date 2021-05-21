@@ -13,7 +13,7 @@ public class Gravity {
 
 
 
-    public static List<Portal> activePortals;
+    public List<Portal> activePortals;
     public static java.util.Map<String, GravityPlayer> players;
 
 

@@ -3,6 +3,7 @@ package com.flareman99.minigame.cmds;
 import com.flareman99.minigame.Main;
 import com.flareman99.minigame.resources.Gravity;
 import com.flareman99.minigame.timers.GameStartAnimation;
+import com.flareman99.minigame.timers.TestTimer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -33,7 +34,6 @@ public class Debug implements CommandExecutor {
         Bukkit.getOnlinePlayers().forEach(player-> players.add(player));
 
         anim = new GameStartAnimation(Main.getPlugin(), players);
-
 
         return false;
     }
