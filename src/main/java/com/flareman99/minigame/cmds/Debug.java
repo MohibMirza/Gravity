@@ -25,15 +25,13 @@ public class Debug implements CommandExecutor {
         if(args.length == 1) {
             if(args[0].equalsIgnoreCase("reset")) {
                 Main.gravity.reset();
+                sender.sendMessage((Gravity.players.get(sender.getName()) == null) + " ");
+                // Main.gravity.start();
                 System.out.println(ChatColor.RED + "Resetting the game");
             }
         }
 
-        Set<Player> players = new HashSet<Player>();
-
-        Bukkit.getOnlinePlayers().forEach(player-> players.add(player));
-
-        anim = new GameStartAnimation(Main.getPlugin(), players);
+        // anim = new GameStartAnimation(Main.getPlugin(), players);
 
         return false;
     }

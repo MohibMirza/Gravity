@@ -1,5 +1,6 @@
 package com.flareman99.minigame.events;
 
+import com.flareman99.minigame.Main;
 import com.flareman99.minigame.resources.Gravity;
 import com.flareman99.minigame.resources.GravityPlayer;
 import org.bukkit.Bukkit;
@@ -13,6 +14,7 @@ public class JoinLeave implements Listener {
     @EventHandler
     public void playerJoin(PlayerJoinEvent event){
         new GravityPlayer(event.getPlayer());
+        event.getPlayer().teleport(Main.gravity.lobby);
         int playerCount = Bukkit.getOnlinePlayers().size()-1;
 
         if(playerCount == 0) {

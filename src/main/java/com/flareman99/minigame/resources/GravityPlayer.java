@@ -10,12 +10,13 @@ public class GravityPlayer {
     private boolean inLobby = true;
     Player player;
 
-    private int earnings;
+    private int earnings = 0;
+
+    private long startTime = 0L;
 
     public GravityPlayer(Player player) {
         this.player = player;
         Gravity.players.put(player.getName(), this);
-        player.teleport(Main.gravity.lobby);
 
 
     }
@@ -43,10 +44,19 @@ public class GravityPlayer {
         }else{
             return Util.coordToLocation(currentMap.spawn);
         }
+
     }
 
     public void addEarnings(int gems) {
         earnings += gems;
+    }
+
+    public double clockLap(long endTime) {
+        return ((double)((endTime - startTime) / 1000L));
+    }
+
+    public void setStartTime(long startTime) {
+        this.startTime = startTime;
     }
 
 

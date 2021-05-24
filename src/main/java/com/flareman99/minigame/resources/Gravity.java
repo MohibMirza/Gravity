@@ -3,6 +3,7 @@ package com.flareman99.minigame.resources;
 import com.flareman99.minigame.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -80,12 +81,26 @@ public class Gravity {
 
     }
 
+    public void start() {
+        Coordinate firstMap = Main.gravity.activeMaps.get(0).spawn;
+        Location loc = new Location(Bukkit.getWorld("world"), firstMap.locX, firstMap.locY, firstMap.locZ);
+        long currentTime = System.currentTimeMillis();
+        Bukkit.getOnlinePlayers().forEach(player -> {
+            player.teleport(loc);
+
+            GravityPlayer gPlayer = Gravity.players.get(player.getName());
+            gPlayer.setCurrentMap(Main.gravity.activeMaps.get(0));
+            gPlayer.setInLobby(false);
+
+            gPlayer.setStartTime(currentTime);
+        });
+    }
+
     public void reset() {
         activePortals.clear();
         activeMaps.clear();
-        players.clear();
         winners.clear();
-        Bukkit.getOnlinePlayers().forEach( player -> player.kickPlayer(""));
+        // Bukkit.getOnlinePlayers().forEach( player -> player.kickPlayer(""));
         chooseMaps();
     }
 

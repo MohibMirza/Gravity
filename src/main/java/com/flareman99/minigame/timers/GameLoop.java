@@ -16,9 +16,12 @@ public class GameLoop extends BukkitRunnable {
 
     // TODO: MAKE WINNER LIST WORK IN GRAVITY.JAVA + IF SOMEONE LEAVES THEY ARE REMOVED FROM THE WINNER LIST BEFORE GAME LOOP SCANS FOR IT
     // TODO: DO ALL COMMENTED ITEMS IN THIS FILE
+    // TODO: SKIP FUNCTIONALITY
+    // TODO: END FIREWORKS
+    // TODO:
 
     public static final int MAX_PLAYERS = 8;
-    public static final int MAX_LOBBY_WAIT_TIME = 10;
+    public static final int MAX_LOBBY_WAIT_TIME = 20;
     public static final int READY_TIME = 15;
     public static final int MAX_GAME_TIME = 360;
 
@@ -71,7 +74,7 @@ public class GameLoop extends BukkitRunnable {
 
            if(timer == 0 || playerCount == MAX_PLAYERS) {
                 state = GameState.READY;
-                timer = 15;
+                timer = READY_TIME;
 
                 // REMOVE ROOM FROM SQL GAME SELECTOR LIST
             }
@@ -84,10 +87,6 @@ public class GameLoop extends BukkitRunnable {
         if(state == GameState.READY) {
             // DO THE COUNTDOWN HERE
             countdown(players);
-            if(timer < 0) {
-                state = GameState.STARTED;
-                timer = MAX_GAME_TIME;
-            }
         }else
 
         if(state == GameState.STARTED) {
@@ -95,6 +94,7 @@ public class GameLoop extends BukkitRunnable {
             timer--;
 
             // UPDATE PLAYER HUDS HERE
+
 
             if(timer == 0 || gravity.winners.size() == playerCount) {
                 state = GameState.END;
@@ -145,9 +145,6 @@ public class GameLoop extends BukkitRunnable {
                     TextComponent.fromLegacyText(HUD.WAITING_ON[playersNeeded-1]));
 
         });
-
-
-
     }
 
     public void countdown(Collection<? extends Player> players) {
@@ -175,11 +172,12 @@ public class GameLoop extends BukkitRunnable {
 
         if(timer < 0){
             players.forEach(player-> {
-                player.teleport(Main.gravity.lobby);
+                state = GameState.STARTED;
+                Main.gravity.reset();
+                Main.gravity.start();
+                timer = MAX_GAME_TIME;
                 player.playSound(player.getLocation(), Sound.ENTITY_WANDERING_TRADER_DISAPPEARED,
                         0.7F, pitch);
-                player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText("湍"));
-                state= GameState.READY;
             });
         }
 

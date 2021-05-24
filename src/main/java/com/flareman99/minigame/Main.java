@@ -36,7 +36,7 @@ public final class Main extends JavaPlugin {
 
 
         gravity = new Gravity(maps, 5);
-        gravity.chooseMaps();
+        // gravity.chooseMaps();
 
         getServer().getPluginManager().registerEvents(new PortalTP(), this);
         getServer().getPluginManager().registerEvents(new JoinLeave(), this);
@@ -46,7 +46,7 @@ public final class Main extends JavaPlugin {
         getCommand("activemaps").setExecutor(new ActiveMaps());
         getCommand("debug").setExecutor(new Debug());
 
-        BukkitTask timer = new GameLoop(this, gravity).runTaskTimer(this, 0, 20L);
+       BukkitTask timer = new GameLoop(this, gravity).runTaskTimer(this, 0, 20L);
 
     }
 
